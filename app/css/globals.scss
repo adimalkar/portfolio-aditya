@@ -1,0 +1,485 @@
+@use "tailwindcss";
+
+:root {
+  --foreground-rgb: rgb(211, 216, 232);
+  --primary-cyan: #00ff88;
+  --primary-blue: #00d4ff;
+  --accent-purple: #8b5cf6;
+  --accent-pink: #ec4899;
+  --ocean-deep: #0a0e1a;
+  --ocean-mid: #0d1829;
+  --ocean-light: #1e3a5f;
+  --card-bg: rgba(15, 25, 45, 0.8);
+  --glow-cyan: rgba(0, 255, 136, 0.3);
+  --glow-blue: rgba(0, 212, 255, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(135deg, var(--ocean-deep) 0%, var(--ocean-mid) 50%, #0f1d32 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ==================== STARFIELD ANIMATION ==================== */
+.stars, .stars2, .stars3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.stars {
+  background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="white" opacity="0.8"/></svg>') repeat;
+  background-size: 200px 200px;
+  animation: twinkle 4s ease-in-out infinite, move-stars 100s linear infinite;
+}
+
+.stars2 {
+  background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="30" cy="70" r="0.8" fill="white" opacity="0.6"/></svg>') repeat;
+  background-size: 300px 300px;
+  animation: twinkle 5s ease-in-out infinite 1s, move-stars 150s linear infinite;
+}
+
+.stars3 {
+  background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="70" cy="30" r="0.5" fill="white" opacity="0.4"/></svg>') repeat;
+  background-size: 400px 400px;
+  animation: twinkle 6s ease-in-out infinite 2s, move-stars 200s linear infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes move-stars {
+  from { transform: translateY(0); }
+  to { transform: translateY(-100%); }
+}
+
+/* ==================== AURORA EFFECT ==================== */
+.aurora {
+  position: absolute;
+  width: 150%;
+  height: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+}
+
+.aurora-1 {
+  top: -20%;
+  left: -25%;
+  background: radial-gradient(ellipse at center, rgba(0, 255, 136, 0.3) 0%, transparent 70%);
+  animation: aurora-float 20s ease-in-out infinite;
+}
+
+.aurora-2 {
+  top: 10%;
+  right: -25%;
+  background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.25) 0%, transparent 70%);
+  animation: aurora-float 25s ease-in-out infinite reverse;
+}
+
+@keyframes aurora-float {
+  0%, 100% {
+    transform: translateX(0) translateY(0) scale(1);
+  }
+  25% {
+    transform: translateX(50px) translateY(-30px) scale(1.1);
+  }
+  50% {
+    transform: translateX(-30px) translateY(20px) scale(0.95);
+  }
+  75% {
+    transform: translateX(20px) translateY(40px) scale(1.05);
+  }
+}
+
+/* ==================== WAVE ANIMATIONS ==================== */
+.wave {
+  animation: wave-motion ease-in-out infinite;
+}
+
+.wave-1 {
+  animation-duration: 8s;
+}
+
+.wave-2 {
+  animation-duration: 10s;
+  animation-delay: -2s;
+}
+
+.wave-3 {
+  animation-duration: 12s;
+  animation-delay: -4s;
+}
+
+@keyframes wave-motion {
+  0%, 100% {
+    transform: translateX(0) translateY(0);
+  }
+  25% {
+    transform: translateX(-25px) translateY(5px);
+  }
+  50% {
+    transform: translateX(0) translateY(-5px);
+  }
+  75% {
+    transform: translateX(25px) translateY(5px);
+  }
+}
+
+/* ==================== FLOATING ORBS ==================== */
+.floating-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.15;
+  pointer-events: none;
+  transition: transform 0.3s ease-out;
+}
+
+.orb-1 {
+  top: 10%;
+  left: 5%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, var(--primary-cyan) 0%, transparent 70%);
+  animation: float-orb 15s ease-in-out infinite;
+}
+
+.orb-2 {
+  top: 60%;
+  right: 5%;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, var(--primary-blue) 0%, transparent 70%);
+  animation: float-orb 18s ease-in-out infinite 3s;
+}
+
+.orb-3 {
+  top: 30%;
+  right: 20%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, var(--accent-purple) 0%, transparent 70%);
+  animation: float-orb 20s ease-in-out infinite 6s;
+}
+
+@keyframes float-orb {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-30px) scale(1.1);
+  }
+}
+
+/* ==================== ANIMATED SHIP ==================== */
+.ship-container {
+  position: absolute;
+  bottom: 80px;
+  right: 15%;
+  width: 120px;
+  height: 100px;
+  animation: ship-sail 25s ease-in-out infinite;
+  z-index: 5;
+  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.5));
+}
+
+.ship {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+}
+
+.sail {
+  animation: sail-flutter 3s ease-in-out infinite;
+  transform-origin: left center;
+}
+
+.flag {
+  animation: flag-wave 1.5s ease-in-out infinite;
+  transform-origin: left center;
+}
+
+@keyframes ship-sail {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateX(-50px) translateY(-10px) rotate(-3deg);
+  }
+  50% {
+    transform: translateX(-100px) translateY(5px) rotate(2deg);
+  }
+  75% {
+    transform: translateX(-50px) translateY(-5px) rotate(-2deg);
+  }
+  100% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes sail-flutter {
+  0%, 100% {
+    transform: skewX(0deg);
+  }
+  50% {
+    transform: skewX(3deg);
+  }
+}
+
+@keyframes flag-wave {
+  0%, 100% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(0.9);
+  }
+}
+
+/* ==================== FLOATING PARTICLES ==================== */
+.particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--primary-cyan);
+  border-radius: 50%;
+  left: var(--x);
+  bottom: -10px;
+  opacity: 0.6;
+  animation: particle-rise var(--duration) ease-out infinite;
+  animation-delay: var(--delay);
+  box-shadow: 0 0 10px var(--primary-cyan);
+}
+
+@keyframes particle-rise {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-100vh) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* ==================== CODE RAIN ==================== */
+.code-rain {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0.15;
+}
+
+.code-drop {
+  position: absolute;
+  top: -50px;
+  left: var(--x);
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: var(--primary-cyan);
+  animation: code-fall 15s linear infinite;
+  animation-delay: var(--delay);
+  text-shadow: 0 0 10px var(--primary-cyan);
+}
+
+@keyframes code-fall {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+/* ==================== GLOW EFFECTS ==================== */
+.glow-text {
+  text-shadow: 
+    0 0 10px var(--primary-cyan),
+    0 0 20px var(--primary-cyan),
+    0 0 30px var(--primary-cyan);
+}
+
+.glow-box {
+  box-shadow: 
+    0 0 20px var(--glow-cyan),
+    inset 0 0 20px rgba(0, 255, 136, 0.1);
+}
+
+/* ==================== CARD STYLES ==================== */
+#sticky-card-1 {
+  --index: 1;
+}
+
+#sticky-card-2 {
+  --index: 2;
+}
+
+#sticky-card-3 {
+  --index: 3;
+}
+
+#sticky-card-4 {
+  --index: 4;
+}
+
+.sticky-card {
+  top: calc(var(--index) * 4rem);
+}
+
+/* ==================== SECTION ANIMATIONS ==================== */
+.section-fade-in {
+  animation: fade-in-up 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==================== TYPING EFFECT ==================== */
+.typing-cursor {
+  animation: blink-cursor 0.8s step-end infinite;
+}
+
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Blinking animation for code cursor */
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Floating animation for terminal card */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ==================== HOVER ANIMATIONS ==================== */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 255, 136, 0.2);
+}
+
+/* ==================== GRADIENT TEXT ==================== */
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--primary-blue) 50%, var(--accent-purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ==================== NAVBAR GLASS EFFECT ==================== */
+.nav-glass {
+  background: rgba(10, 14, 26, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+}
+
+/* ==================== RESPONSIVE ADJUSTMENTS ==================== */
+@media (max-width: 768px) {
+  .island {
+    display: none;
+  }
+  
+  .ship-container {
+    width: 60px;
+    right: 5%;
+    bottom: 120px;
+  }
+  
+  .aurora {
+    opacity: 0.2;
+  }
+}
+
+/* ==================== SCROLLBAR STYLING ==================== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ocean-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary-cyan), var(--primary-blue));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--primary-blue), var(--accent-purple));
+}
+
+/* ==================== SELECTION STYLING ==================== */
+::selection {
+  background: var(--primary-cyan);
+  color: var(--ocean-deep);
+}

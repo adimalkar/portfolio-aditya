@@ -1,0 +1,84 @@
+- Diabetic Retinopathy Severity Classification, MS Data
+Jan 2025 – May 2025
+Processed a large-scale image dataset (143,509 images, ~22GB) using Apache Spark, leveraging Azure Blob Storage for distributed data access and parallel preprocessing.
+Engineered a deep learning classification pipeline using a custom VGG-16-based CNN model, achieving over 87% accuracy in identifying severity levels of diabetic retinopathy.
+Reduced training time by 40% using Spark's distributed compute capabilities and optimized data pipeline with TFRecords format conversion.
+
+
+
+- MultiModal Twitter Sentiment Analysis, MS Data Science						        Aug 2024 - Dec 2024
+Preprocessed and cleaned 1.6 million tweets, leveraging techniques like tokenization, stopword removal, stemming/lemmatization, and handling of special characters, hashtags, and emojis to improve model efficiency.
+Implemented a deep learning pipeline using Sequential Model architecture with Keras, including Embedding, Conv1D, MaxPooling1D, and LSTM layers, achieving high classification accuracy of above 85% on a dataset of raw tweets.
+Compared SVM, Decision Tree, Bi-LSTM, and BART models, achieving 12–18% higher F1-score with deep learning approaches over traditional methods.
+
+
+
+- AI-Powered Agentic Career Advisor, MS Data Science   					                      Jun 2025 – Dec 2025
+Architected an autonomous chatbot using LangChain, AWS Bedrock (Claude V2), and Streamlit, incorporating Agentic AI concepts like goal-seeking and tool-use.
+Developed a RAG pipeline that increased response relevance by 40% by integrating external career data.
+Evaluated Alignment & Safety by designing a framework that reduced model hallucinations by 75%.
+
+
+
+- California Housing Price Prediction, MS Data Science                                                                                         Aug 2024 - Dec 2024
+Developed multivariate regression models using statsmodels to predict housing prices with an RMSE of $48,000, improving model reliability by identifying and removing features with p-values > 0.05.
+Executed experimentation via feature importance and heatmap visualizations in Seaborn, identifying a 0.68 correlation between median income and property value to recommend a differentiated risk strategy with 80% Loan-to-Value (LTV) caps for high-volatility zones.
+
+
+
+
+- Real-Time Speech-to-Speech Translation System
+
+Tech Stack: Python, PyTorch, Whisper (STT), MarianMT, Meta MMS-TTS, Silero VAD, Threading
+
+Architected a low-latency, concurrent translation pipeline using a producer-consumer model with Python threading and message queues, achieving a pipeline depth of ~2.8 seconds.
+
+Integrated Whisper Medium for Speech-to-Text (4% WER) and MarianMT for translation, achieving a BLEU score of 80.85 for English-to-Spanish and 71.64 for English-to-French.
+
+Implemented a custom Voice Activity Detection (VAD) system using Silero to detect utterance boundaries with <3ms frame latency, reducing false positives to 1.8%.
+
+Engineered a hallucination filter to remove spurious Whisper artifacts and optimized the pipeline to process audio chunks every 200ms, enabling seamless bidirectional communication.
+
+
+
+- Comparative Analysis of Financial Data Providers (Yahoo vs. CRSP)
+
+Tech Stack: Python (Pandas, yfinance), SQL, WRDS, Matplotlib, Quantitative Analysis
+
+Conducted a rigorous 10-year backtest (2015–2024) of a Moving Average Crossover strategy to evaluate data integrity between Yahoo Finance and CRSP.
+
+Identified a critical 115.43% discrepancy in total returns (Yahoo: 274% vs. CRSP: 158%), proving that survivorship bias in free data sources creates a 41.5% variance in annualized returns.
+
+Analyzed the impact of delisting events (e.g., Lehman Brothers, Enron) and corporate actions, demonstrating that excluding delisted firms overstates financial sector returns by 5–15% annualized.
+
+Developed a cross-validation dashboard to map feature overlap across providers, validating price correlation at 99.9% while highlighting significant risks in dividend adjustment methodologies.
+
+
+
+
+- Time Series Modeling: WTI Crude Oil & Ozone Concentration
+
+Tech Stack: R (forecast, tseries, ggplot2), ARIMA/SARIMA, Statistical Modeling
+
+Developed forecasting models for WTI Crude Oil (financial/stochastic) and LA Ozone (environmental/seasonal) using the Box-Jenkins methodology over a 29-year and 4-year dataset respectively.
+
+Engineered an ARIMA(1,1,1) model for crude oil prices, achieving a Root Mean Squared Error (RMSE) of $1.49 and determining that price changes follow a random walk with high volatility.
+
+Built a SARIMA(1,1,2)(0,1,0)[365] model for ozone concentration, capturing strong annual seasonality and reducing Mean Absolute Error (MAE) to 0.0073 ppm.
+
+Generated 60-day forecasts with 80% and 95% confidence intervals, validating model robustness through Ljung-Box tests and residual diagnostics to ensure white noise compliance.
+
+
+
+
+- AI Agent for Automated Licensing & Credentialing (Hackathon)
+
+Tech Stack: AWS (RDS, EC2), LangChain, React, Node.js, Python, OpenAI API
+
+    Developed CrediSync, a multi-agent automation system for hospital credentialing, reducing manual form-filling time by ~90% by eliminating repetitive data entry tasks.
+
+    Engineered a dual-agent architecture with LangChain: a Parser Agent that extracted 15+ key entities (e.g., qualifications like "MD") from unstructured PDFs into standardized JSON, and a Form Filler Agent that auto-populated web forms with 100% field mapping accuracy.
+
+    Deployed a scalable, multi-tenant platform on AWS EC2 and RDS, utilizing dynamic sub-domaining to support isolated environments for different healthcare organizations during a 1-month live pilot.
+
+    Built a custom Chrome extension to bridge stored JSON credentials with third-party portals, enabling one-click auto-filling for complex licensing applications and ensuring seamless data interoperability.
