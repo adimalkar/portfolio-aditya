@@ -51,45 +51,75 @@ const WaveMesh = () => {
       const originalPositions = new Float32Array(positions.array.length);
       originalPositions.set(positions.array);
 
-      // Material - visible waves with detail
-      const material = new THREE.MeshPhongMaterial({
-        color: 0x0d3050,        // Ocean blue
-        emissive: 0x061828,     // Subtle blue glow
-        specular: 0x30b0b0,     // Teal specular highlights
-        shininess: 80,          // Reflective for wave detail
+      // Custom Shader Material for dynamic wave coloring
+      const material = new THREE.ShaderMaterial({
+        uniforms: {
+          time: { value: 0 },
+          deepColor:   { value: new THREE.Color(0x020810) },  // Almost black deep
+          midColor:    { value: new THREE.Color(0x0a2540) },  // Dark navy
+          shallowColor:{ value: new THREE.Color(0x0d4060) },  // Dark teal
+          foamColor:   { value: new THREE.Color(0x1a6080) },  // Wave crest highlight
+          lightDir:    { value: new THREE.Vector3(0.3, 1.0, 0.5).normalize() },
+        },
+        vertexShader: `
+          varying vec3 vPosition;
+          varying vec3 vNormal;
+          varying float vElevation;
+          void main() {
+            vPosition = position;
+            vNormal = normalize(normalMatrix * normal);
+            vElevation = position.y;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }
+        `,
+        fragmentShader: `
+          uniform vec3 deepColor;
+          uniform vec3 midColor;
+          uniform vec3 shallowColor;
+          uniform vec3 foamColor;
+          uniform vec3 lightDir;
+          uniform float time;
+          varying vec3 vPosition;
+          varying vec3 vNormal;
+          varying float vElevation;
+
+          void main() {
+            // Height-based color mixing
+            float heightFactor = smoothstep(-4.0, 5.0, vElevation);
+            
+            // Deep ocean → mid → shallow → foam based on wave height
+            vec3 color = mix(deepColor, midColor, smoothstep(0.0, 0.3, heightFactor));
+            color = mix(color, shallowColor, smoothstep(0.3, 0.6, heightFactor));
+            color = mix(color, foamColor, smoothstep(0.7, 1.0, heightFactor));
+            
+            // Lighting - diffuse
+            float diffuse = max(dot(vNormal, lightDir), 0.0);
+            color += diffuse * 0.2;
+            
+            // Specular highlight on wave crests
+            vec3 viewDir = normalize(vec3(0.0, 1.0, 1.0));
+            vec3 halfDir = normalize(lightDir + viewDir);
+            float spec = pow(max(dot(vNormal, halfDir), 0.0), 64.0);
+            color += spec * vec3(0.2, 0.5, 0.5);
+            
+            // Subtle shimmer on peaks
+            float shimmer = smoothstep(0.6, 1.0, heightFactor) * spec * 0.5;
+            color += shimmer * vec3(0.1, 0.3, 0.3);
+            
+            gl_FragColor = vec4(color, 0.92);
+          }
+        `,
         side: THREE.DoubleSide,
-        flatShading: false,
         transparent: true,
-        opacity: 0.9,
       });
 
       const mesh = new THREE.Mesh(geometry, material);
       mesh.position.y = -3;
       scene.add(mesh);
 
-      // Lighting for wave visibility
-      const ambientLight = new THREE.AmbientLight(0x1a3a4a, 0.6);
+      // Lighting (still needed for scene ambiance)
+      const ambientLight = new THREE.AmbientLight(0x1a3a4a, 0.4);
       scene.add(ambientLight);
-
-      // Main light from above-front - highlights wave peaks
-      const mainLight = new THREE.DirectionalLight(0xffffff, 0.8);
-      mainLight.position.set(5, 30, 20);
-      scene.add(mainLight);
-
-      // Side light for depth perception
-      const sideLight = new THREE.DirectionalLight(0x60c0c0, 0.5);
-      sideLight.position.set(-20, 10, 0);
-      scene.add(sideLight);
-
-      // Underwater glow
-      const underwaterGlow = new THREE.PointLight(0x00aacc, 1.5, 100);
-      underwaterGlow.position.set(0, -10, 5);
-      scene.add(underwaterGlow);
-
-      // Rim light from front
-      const rimLight = new THREE.DirectionalLight(0x40a0a0, 0.6);
-      rimLight.position.set(0, 8, 40);
-      scene.add(rimLight);
 
       // Mouse move handler - map to wave mesh coordinates
       const handleMouseMove = (event) => {
@@ -174,8 +204,11 @@ const WaveMesh = () => {
         pos.needsUpdate = true;
         geometry.computeVertexNormals();
 
+        // Update shader time uniform
+        material.uniforms.time.value = time;
+
         // Gentle camera sway based on mouse
-        const targetX = (mouseX / 50) * 3;  // Normalize back for camera
+        const targetX = (mouseX / 50) * 3;
         const targetY = 15 - (mouseY / 30) * 2;
         camera.position.x += (targetX - camera.position.x) * 0.02;
         camera.position.y += (targetY - camera.position.y) * 0.02;

@@ -1,14 +1,16 @@
 "use client";
 // @flow strict
 import { isValidEmail } from "@/utils/check-email";
-import axios from "axios";
-import { useState } from "react";
+import emailjs from '@emailjs/browser';
+import { useRef, useState } from "react";
 import { TbMailForward } from "react-icons/tb";
 import { toast } from "react-toastify";
 
 function ContactForm() {
   const [error, setError] = useState({ email: false, required: false });
+  const [configError, setConfigError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const formRef = useRef(null);
   const [userInput, setUserInput] = useState({
     name: "",
     email: "",
@@ -31,13 +33,32 @@ function ContactForm() {
       return;
     } else {
       setError({ ...error, required: false });
-    };
+    }
+
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      setConfigError("Email not configured. Add SERVICE_ID, TEMPLATE_ID, and PUBLIC_KEY in Vercel env.");
+      toast.error("Email not configured. Add env vars in Vercel and redeploy.");
+      return;
+    }
+    setConfigError(null);
 
     try {
       setIsLoading(true);
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_APP_URL}/api/contact`,
-        userInput
+
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          from_name: userInput.name,
+          from_email: userInput.email,
+          message: userInput.message,
+          to_name: "Aditya Malkar",
+        },
+        publicKey
       );
 
       toast.success("Message sent successfully!");
@@ -46,11 +67,14 @@ function ContactForm() {
         email: "",
         message: "",
       });
-    } catch (error) {
-      toast.error(error?.response?.data?.message);
+    } catch (err) {
+      const msg = (err?.text || err?.message || String(err)).slice(0, 80);
+      setConfigError("Send failed. " + (msg || "Check Vercel env: PUBLIC_KEY."));
+      toast.error("Failed to send. See message below.");
+      console.error("EmailJS error:", err);
     } finally {
       setIsLoading(false);
-    };
+    }
   };
 
   return (
@@ -69,7 +93,7 @@ function ContactForm() {
             {"Have a question or want to work together? Feel free to reach out. I'm always open to discussing new projects and opportunities."}
           </p>
           
-          <div className="flex flex-col gap-5">
+          <form ref={formRef} onSubmit={handleSendMail} className="flex flex-col gap-5">
             {/* Name input */}
             <div className="flex flex-col gap-2">
               <label className="text-sm font-mono text-gray-300">
@@ -132,6 +156,11 @@ function ContactForm() {
             
             {/* Submit section */}
             <div className="flex flex-col items-center gap-4 mt-2">
+              {configError && (
+                <p className="text-xs text-amber-400 font-mono text-center max-w-md">
+                  {configError}
+                </p>
+              )}
               {error.required && (
                 <p className="text-xs text-red-400 font-mono">
                   // Error: All fields are required
@@ -139,8 +168,7 @@ function ContactForm() {
               )}
               <button
                 className="w-full sm:w-auto flex items-center justify-center gap-2 hover:gap-3 rounded-lg bg-gradient-to-r from-[#00ff88] to-[#00d4ff] px-8 py-3 text-center text-sm font-semibold uppercase tracking-wider text-[#0a0e1a] no-underline transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,255,136,0.4)] disabled:opacity-50 disabled:cursor-not-allowed"
-                role="button"
-                onClick={handleSendMail}
+                type="submit"
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -156,7 +184,7 @@ function ContactForm() {
                 )}
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>

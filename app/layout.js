@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
       <body className={spaceGrotesk.className}>
-        <ToastContainer />
+        <ToastContainer theme="dark" position="top-center" autoClose={5000} style={{ zIndex: 99999 }} />
         <AnimatedBackground />
         <main className="min-h-screen relative mx-auto px-6 sm:px-12 lg:max-w-[70rem] xl:max-w-[76rem] 2xl:max-w-[92rem] text-white z-10">
           <Navbar />
