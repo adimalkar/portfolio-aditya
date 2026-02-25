@@ -1,7 +1,7 @@
 "use client";
 // @flow strict
 import { isValidEmail } from "@/utils/check-email";
-import emailjs from '@emailjs/browser';
+import axios from 'axios';
 import { useRef, useState } from "react";
 import { TbMailForward } from "react-icons/tb";
 import { toast } from "react-toastify";
@@ -35,43 +35,24 @@ function ContactForm() {
       setError({ ...error, required: false });
     }
 
-    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
-
-    if (!serviceId || !templateId || !publicKey) {
-      setConfigError("Email not configured. Add SERVICE_ID, TEMPLATE_ID, and PUBLIC_KEY in Vercel env.");
-      toast.error("Email not configured. Add env vars in Vercel and redeploy.");
-      return;
-    }
-    setConfigError(null);
-
     try {
       setIsLoading(true);
-
-      await emailjs.send(
-        serviceId,
-        templateId,
-        {
-          from_name: userInput.name,
-          from_email: userInput.email,
-          message: userInput.message,
-          to_name: "Aditya Malkar",
-        },
-        publicKey
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_APP_URL}/api/contact`,
+        userInput
       );
 
-      toast.success("Message sent successfully!");
-      setUserInput({
-        name: "",
-        email: "",
-        message: "",
-      });
+      if (res.data.success) {
+        toast.success("Message sent successfully!");
+        setUserInput({
+          name: "",
+          email: "",
+          message: "",
+        });
+      }
     } catch (err) {
-      const msg = (err?.text || err?.message || String(err)).slice(0, 80);
-      setConfigError("Send failed. " + (msg || "Check Vercel env: PUBLIC_KEY."));
-      toast.error("Failed to send. See message below.");
-      console.error("EmailJS error:", err);
+      toast.error(err?.response?.data?.message || err?.message || "Failed to send message.");
+      console.error("API Error:", err);
     } finally {
       setIsLoading(false);
     }
@@ -83,16 +64,16 @@ function ContactForm() {
         <span className="text-[#00d4ff]">{'>'}</span> SEND_MESSAGE
         <span className="w-8 h-[1px] bg-[#00ff88]" />
       </p>
-      
+
       <div className="relative group">
         {/* Glow effect */}
         <div className="absolute -inset-[1px] bg-gradient-to-r from-[#00ff88] via-[#00d4ff] to-[#8b5cf6] rounded-lg opacity-30 group-hover:opacity-50 transition-opacity duration-500 blur-sm" />
-        
+
         <div className="relative max-w-3xl text-white rounded-lg border border-[#1e3a5f] bg-[#0a0e1a]/90 backdrop-blur-xl p-4 lg:p-6">
           <p className="text-sm text-gray-400 mb-6">
             {"Have a question or want to work together? Feel free to reach out. I'm always open to discussing new projects and opportunities."}
           </p>
-          
+
           <form ref={formRef} onSubmit={handleSendMail} className="flex flex-col gap-5">
             {/* Name input */}
             <div className="flex flex-col gap-2">
@@ -153,7 +134,7 @@ function ContactForm() {
                 value={userInput.message}
               />
             </div>
-            
+
             {/* Submit section */}
             <div className="flex flex-col items-center gap-4 mt-2">
               {configError && (

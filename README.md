@@ -157,7 +157,7 @@ This portfolio is deployed on **Vercel** with custom domain **adityamalkar.com**
 
 ## 📧 Contact
 
-- **Email:** amalkar@stevens.edu
+- **Email:** adityamalkar0@gmail.com
 - **LinkedIn:** [linkedin.com/in/aditya-malkar](https://www.linkedin.com/in/aditya-malkar/)
 - **GitHub:** [github.com/adimalkar](https://github.com/adimalkar)
 - **Location:** Hoboken, New Jersey, USA
