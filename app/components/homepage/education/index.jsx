@@ -86,17 +86,22 @@ function Education() {
                       </span>
                     </div>
                     
-                    <div className="flex items-center gap-x-6">
-                      <div className="text-[#00d4ff] transition-all duration-300 group-hover:scale-110 group-hover:text-[#00ff88]">
+                    <div className="flex items-start gap-x-6">
+                      <div className="text-[#00d4ff] mt-2 transition-all duration-300 group-hover:scale-110 group-hover:text-[#00ff88]">
                         <FaGraduationCap size={40} />
                       </div>
                       <div>
                         <p className="text-base sm:text-xl mb-1 font-semibold text-white group-hover:text-[#00d4ff] transition-colors duration-300">
                           {education.title}
                         </p>
-                        <p className="text-sm sm:text-base text-gray-400">
+                        <p className="text-sm sm:text-base text-gray-400 mb-2 font-medium">
                           {education.institution}
                         </p>
+                        {education.description && (
+                          <div className="text-sm text-gray-300 whitespace-pre-line leading-relaxed">
+                            {education.description}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>

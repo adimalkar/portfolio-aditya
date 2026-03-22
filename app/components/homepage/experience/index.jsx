@@ -86,17 +86,22 @@ function Experience() {
                       </span>
                     </div>
                     
-                    <div className="flex items-center gap-x-6">
-                      <div className="text-[#8b5cf6] transition-all duration-300 group-hover:scale-110 group-hover:text-[#00ff88]">
+                    <div className="flex items-start gap-x-6">
+                      <div className="text-[#8b5cf6] mt-2 transition-all duration-300 group-hover:scale-110 group-hover:text-[#00ff88]">
                         <BsPersonWorkspace size={36} />
                       </div>
                       <div>
                         <p className="text-base sm:text-xl mb-1 font-semibold text-white group-hover:text-[#00ff88] transition-colors duration-300">
                           {exp.title}
                         </p>
-                        <p className="text-sm sm:text-base text-gray-400">
+                        <p className="text-sm sm:text-base text-gray-400 mb-2 font-medium">
                           {exp.company}
                         </p>
+                        {exp.description && (
+                          <div className="text-sm text-gray-300 whitespace-pre-line leading-relaxed">
+                            {exp.description}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
