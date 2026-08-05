@@ -8,14 +8,14 @@ import Skills from "./components/homepage/skills";
 
 export default async function Home() {
   return (
-    <div suppressHydrationWarning className="relative z-10">
+    <>
       <HeroSection />
       <AboutSection />
       <Experience />
-      <Skills />
       <Projects />
+      <Skills />
       <Education />
       <ContactSection />
-    </div>
+    </>
   );
 }

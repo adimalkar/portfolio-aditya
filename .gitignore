@@ -19,6 +19,13 @@
 .DS_Store
 *.pem
 
+# local scratch: reference clones and the pre-port design prototype
+/tmp_repo/
+/voyage-portfolio.html
+
+# resume variants not served by the site (public/Aditya_Resume.pdf is the live one)
+/ADITYA_MALKAR_Data_Analyst.pdf
+
 # debug
 npm-debug.log*
 yarn-debug.log*
