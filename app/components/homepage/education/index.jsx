@@ -1,117 +1,89 @@
 // @flow strict
-'use client';
-
 import { educations } from "@/utils/data/educations";
-import { useEffect, useRef, useState } from "react";
-import { FaGraduationCap } from "react-icons/fa";
-import lottieFile from '../../../assets/lottie/study.json';
-import AnimationLottie from "../../helper/animation-lottie";
+import { personalData } from "@/utils/data/personal-data";
+import Image from "next/image";
 
 function Education() {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <div ref={sectionRef} id="education" className="relative z-50 border-t my-12 lg:my-24 border-[#1e3a5f] pt-12">
-      {/* Decorative glow */}
-      <div className="w-[150px] h-[150px] bg-[#00d4ff] rounded-full absolute top-20 right-10 filter blur-[100px] opacity-20"></div>
-
-      {/* Top gradient line */}
-      <div className="flex justify-center -translate-y-[1px]">
-        <div className="w-3/4">
-          <div className="h-[1px] bg-gradient-to-r from-transparent via-[#00d4ff] to-transparent w-full" />
+    <section id="education">
+      <span className="waypoint" data-side="0.34" data-name="EDUCATION" />
+      <div className="wrap">
+        <div className="lighthouse-art rv" aria-hidden="true">
+          <svg width="180" height="290" viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
+            <path className="lh-beam" d="M60 34 L190 6 L190 60 Z" fill="#d9a441" opacity=".5" />
+            <ellipse cx="60" cy="190" rx="46" ry="10" fill="#16404c" />
+            <path d="M46 70 L74 70 L82 185 L38 185 Z" fill="#ecdfc3" />
+            <path d="M46 86 L76 86 L77 102 L45 102 Z" fill="#9c2f1e" />
+            <path d="M44 122 L78 122 L79 138 L43 138 Z" fill="#9c2f1e" />
+            <path d="M42 158 L80 158 L81 174 L41 174 Z" fill="#9c2f1e" />
+            <rect x="48" y="40" width="24" height="30" rx="3" fill="#2a2118" />
+            <rect x="52" y="44" width="16" height="16" rx="2" fill="#ffd98a" />
+            <path d="M44 40 L76 40 L60 22 Z" fill="#9c2f1e" />
+            <circle cx="60" cy="34" r="3" fill="#ffd98a" />
+          </svg>
         </div>
-      </div>
-
-      {/* Section header */}
-      <div className={`flex justify-center my-5 lg:py-8 transition-all duration-1000 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-      }`}>
-        <div className="flex items-center">
-          <span className="w-24 h-[2px] bg-gradient-to-r from-transparent to-[#00d4ff]"></span>
-          <span className="bg-gradient-to-r from-[#00d4ff]/20 to-[#00ff88]/20 backdrop-blur-sm border border-[#00d4ff]/30 text-[#00d4ff] p-2 px-5 text-xl rounded-md font-mono">
-            Education
-          </span>
-          <span className="w-24 h-[2px] bg-gradient-to-l from-transparent to-[#00ff88]"></span>
-        </div>
-      </div>
-
-      <div className="py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
-          {/* Lottie Animation */}
-          <div className={`flex justify-center items-start transition-all duration-1000 delay-300 ${
-            isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
-          }`}>
-            <div className="w-3/4 h-3/4">
-              <AnimationLottie animationPath={lottieFile} />
-            </div>
-          </div>
-
-          {/* Education cards */}
-          <div>
-            <div className="flex flex-col gap-6">
-              {educations.map((education, index) => (
-                <div
-                  key={education.id}
-                  className={`group relative p-[1px] rounded-lg overflow-hidden transition-all duration-700 ${
-                    isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
-                  }`}
-                  style={{ transitionDelay: `${(index + 1) * 200}ms` }}
-                >
-                  {/* Animated border gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#00d4ff] via-[#00ff88] to-[#8b5cf6] opacity-30 group-hover:opacity-100 transition-opacity duration-500" />
-                  
-                  <div className="relative bg-[#0a0e1a] rounded-lg p-5 backdrop-blur-sm">
-                    {/* Duration badge */}
-                    <div className="flex justify-center mb-4">
-                      <span className="text-xs sm:text-sm text-[#00d4ff] font-mono bg-[#00d4ff]/10 px-3 py-1 rounded-full">
-                        {education.duration}
-                      </span>
-                    </div>
-                    
-                    <div className="flex items-start gap-x-6">
-                      <div className="text-[#00d4ff] mt-2 transition-all duration-300 group-hover:scale-110 group-hover:text-[#00ff88]">
-                        <FaGraduationCap size={40} />
-                      </div>
-                      <div>
-                        <p className="text-base sm:text-xl mb-1 font-semibold text-white group-hover:text-[#00d4ff] transition-colors duration-300">
-                          {education.title}
-                        </p>
-                        <p className="text-sm sm:text-base text-gray-400 mb-2 font-medium">
-                          {education.institution}
-                        </p>
-                        {education.description && (
-                          <div className="text-sm text-gray-300 whitespace-pre-line leading-relaxed">
-                            {education.description}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
+        <div>
+          <div className="eyebrow rv">WAYPOINT 05 <span className="coords" data-coords /></div>
+          <h2 className="island-name rv">The <em>Lighthouse</em></h2>
+          <div className="edu-list">
+            {educations.map((edu) => (
+              <article className="edu rv" key={edu.id}>
+                <div className="when">
+                  {edu.duration}{edu.location ? ` · ${edu.location.toUpperCase()}` : ""}
                 </div>
-              ))}
-            </div>
+                <h3>{edu.title}</h3>
+                <div className="school">{edu.institution}</div>
+                <p dangerouslySetInnerHTML={{ __html: edu.description }} />
+              </article>
+            ))}
+            {personalData.achievements?.length > 0 && (
+              <div className="honours rv">
+                <div className="h-label">HONOURS</div>
+                {personalData.achievements.map((item, i) => (
+                  <article className="honour" key={i}>
+                    <div className="h-ribbon">🏆 {item.award.toUpperCase()} · {item.year}</div>
+                    <h3>
+                      {item.url ? (
+                        <a href={item.url} target="_blank" rel="noopener noreferrer">
+                          {item.title} ↗
+                        </a>
+                      ) : item.title}
+                    </h3>
+                    <p>{item.description}</p>
+                  </article>
+                ))}
+              </div>
+            )}
+            {personalData.certifications?.length > 0 && (
+              <div className="certs rv">
+                <div className="h-label">CERTIFICATIONS</div>
+                <div className="cert-grid">
+                  {personalData.certifications.map((cert, i) => (
+                    <a
+                      className="cert-badge"
+                      key={i}
+                      href={cert.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={`Verify ${cert.name} on Credly`}
+                    >
+                      <Image
+                        src={cert.image}
+                        alt={`${cert.name} — ${cert.level}`}
+                        width={110}
+                        height={110}
+                      />
+                      <span className="cb-name">{cert.name}</span>
+                      <span className="cb-level">{cert.level} · Verify ↗</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

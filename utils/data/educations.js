@@ -1,16 +1,18 @@
 export const educations = [
   {
     id: 1,
-    title: "Master of Science in Data Science",
-    duration: "2024 - 2026",
+    title: "M.S. in Data Science",
+    duration: "2024 — 2026",
+    location: "Hoboken, NJ",
     institution: "Stevens Institute of Technology",
-    description: "GPA: 3.7 | Relevant Coursework: NLP, Statistical Methods, Time Series Analysis, Database Management (SQL), Deep Learning.\nActively engineering multi-agent RAG systems and high-performance data pipelines. Researching lossy and lossless Neural Data Compression architectures for high-fidelity images and videos.",
+    description: "<b>GPA 3.7</b> · NLP, Statistical Methods, Time Series Analysis, Database Management, Deep Learning. Thesis-adjacent tinkering: multi-agent RAG systems and neural data compression for high-fidelity images and video.",
   },
   {
     id: 2,
-    title: "Bachelor's Degree",
-    duration: "2020 - 2024",
+    title: "B.E. in Computer Engineering",
+    duration: "2020 — 2024",
+    location: "Mumbai, India",
     institution: "University of Mumbai",
-    description: "CGPA: 8.37\nDeveloped a strong engineering foundation in scalable software architecture, algorithm design, and core programming paradigms. Participated in multiple hackathons leading to a specialization in Machine Learning and Data Science.",
+    description: "<b>CGPA 8.37</b> · Scalable software architecture, algorithm design, and core programming — plus the hackathons that pulled me toward machine learning in the first place.",
   }
 ]

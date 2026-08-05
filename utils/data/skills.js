@@ -1,111 +1,55 @@
-export const skillsData = [
-  'Python',
-  'Tensorflow',
-  'Pytorch',
-  'AWS',
-  'Azure',
-  'GCP',
-  'MySQL',
-  'MongoDB',
-  'Docker',
-  'Git',
-  'OpenCV',
-  'Numpy',
-  'Django',
-  'C++',
-  'Java',
-  'Matlab',
-  'Selenium'
-]
+// "Cargo Manifest" — grouped skills. `heavy: true` renders a dark, weighted crate.
+export const skillGroups = [
+  {
+    name: 'LANGUAGES',
+    crates: [
+      { label: 'Python', heavy: true },
+      { label: 'SQL' },
+      { label: 'R' },
+      { label: 'Bash / Zsh' },
+      { label: 'C / C++ (foundational)' },
+      { label: 'Java' },
+      { label: 'MATLAB' },
+    ],
+  },
+  {
+    name: 'MACHINE LEARNING & DEEP LEARNING',
+    crates: [
+      { label: 'PyTorch', heavy: true },
+      { label: 'TensorFlow', heavy: true },
+      { label: 'Keras' },
+      { label: 'Scikit-learn' },
+      { label: 'XGBoost' },
+      { label: 'OpenCV' },
+      { label: 'MediaPipe' },
+      { label: 'Selenium' },
+    ],
+  },
+  {
+    name: 'DATA ENGINEERING & STORAGE',
+    crates: [
+      { label: 'Spark / PySpark', heavy: true },
+      { label: 'Pandas' },
+      { label: 'NumPy' },
+      { label: 'MySQL' },
+      { label: 'MongoDB' },
+    ],
+  },
+  {
+    name: 'AI, CLOUD & TOOLING',
+    crates: [
+      { label: 'AWS — SageMaker · Bedrock · EC2 · S3 · Glue', heavy: true },
+      { label: 'Azure' },
+      { label: 'GCP' },
+      { label: 'LangChain' },
+      { label: 'Docker' },
+      { label: 'Git' },
+      { label: 'Django' },
+      { label: 'Streamlit' },
+      { label: 'Linux' },
+    ],
+  },
+];
 
-// Additional skills not in the icon list:
-// R, SQL, PySpark, Pandas, Scikit-learn, MediaPipe, NLTK, Matplotlib, Keras
-// Flask, LangChain, Streamlit, Spark, React, Node.js
-
-// Choose your skills from below. Make sure it's in the same format and spelled correctly.
-// Couldn't find the required skills? Raise an issue on github at https://github.com/hhhrrrttt222111/developer-portfolio/issues/new
-
-
-// AVAILABLE SKILLS
-
-/* 
-  HTML
-  CSS
-  JS 
-  React
-  Next JS
-  Nuxt JS
-  Node JS
-  Vue
-  Angular
-  Docker
-  Photoshop
-  Illustrator
-  Svelte
-  GCP
-  Azure
-  Fastify
-  Haxe
-  Ionic
-  Markdown
-  Microsoft Office
-  Picsart
-  Sketch
-  Unity
-  WolframAlpha
-  Adobe XD
-  After Effects
-  Bootstrap
-  Bulma
-  CapacitorJs
-  Coffeescript
-  MemSQL
-  C
-  C++
-  C#
-  Python
-  Java
-  Julia
-  Matlab
-  Swift
-  Ruby
-  Kotlin
-  Go
-  PHP
-  Flutter
-  Dart
-  Typescript
-  Swift
-  Git
-  Figma
-  Canva
-  Ubuntu
-  Bootstrap
-  MongoDB
-  Tailwind
-  ViteJS
-  VuetifyJS
-  MySQL
-  PostgreSQL
-  Prisma
-  AWS
-  Firebase
-  Blender
-  Premiere Pro
-  Adobe Audition
-  Deno
-  Django
-  Gimp
-  Graphql
-  Lightroom
-  MaterialUI
-  Nginx
-  Numpy
-  OpenCV
-  Pytorch
-  Selenium
-  Strapi
-  Tensorflow
-  Webex
-  Wordpress
-*/
+// Flat list kept for any consumer that still wants a simple array.
+export const skillsData = skillGroups.flatMap((g) => g.crates.map((c) => c.label));

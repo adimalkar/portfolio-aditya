@@ -1,147 +1,50 @@
 // @flow strict
-'use client';
-
-import { personalData } from '@/utils/data/personal-data';
-import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
-import { BiLogoLinkedin } from "react-icons/bi";
-import { CiLocationOn } from "react-icons/ci";
-import { FaXTwitter } from "react-icons/fa6";
-import { IoLogoGithub, IoMdCall } from "react-icons/io";
-import { MdAlternateEmail } from "react-icons/md";
-import ContactForm from './contact-form';
+import { personalData } from "@/utils/data/personal-data";
+import ContactForm from "./contact-form";
 
 function ContactSection() {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  const telHref = `tel:${personalData.phone.replace(/[^+\d]/g, "")}`;
 
   return (
-    <div ref={sectionRef} id="contact" className="my-12 lg:my-16 relative mt-24 text-white pt-12">
-      {/* Decorative side label */}
-      <div className="hidden lg:flex flex-col items-center absolute top-24 -right-8">
-        <span className="bg-gradient-to-r from-[#00ff88]/20 to-[#00d4ff]/20 backdrop-blur-sm border border-[#00ff88]/30 w-fit text-[#00ff88] rotate-90 p-2 px-5 text-xl rounded-md font-mono">
-          CONTACT
-        </span>
-        <span className="h-36 w-[2px] bg-gradient-to-b from-[#00ff88] to-transparent"></span>
-      </div>
-
-      {/* Section header */}
-      <div className={`flex justify-center mb-12 transition-all duration-1000 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-      }`}>
-        <div className="text-center">
-          <p className="font-mono mb-2 text-[#00ff88] text-sm tracking-widest">
-            {'>'} GET_IN_TOUCH
+    <section id="contact">
+      <span className="waypoint" data-side="0.6" data-name="ARRIVE" />
+      <div className="wrap">
+        <div>
+          <div className="eyebrow rv">FINAL WAYPOINT <span className="coords" data-coords /></div>
+          <h2 className="island-name rv">Send a <em>Signal</em></h2>
+          <p className="section-sub rv">
+            Hiring, collaborating, or just comparing charts — the radio is always on.
+            I usually reply within a day.
           </p>
-          <h2 className="text-2xl lg:text-3xl font-bold text-white">
-            Let&apos;s <span className="gradient-text">Connect</span>
-          </h2>
+          <div className="contact-info rv">
+            <a className="ci" href={`mailto:${personalData.email}`}>
+              <span className="dot">@</span>
+              <span><b>{personalData.email}</b><span>PREFERRED CHANNEL</span></span>
+            </a>
+            <a className="ci" href={telHref}>
+              <span className="dot">☎</span>
+              <span><b>{personalData.phone}</b><span>VOICE / SIGNAL</span></span>
+            </a>
+            <div className="ci">
+              <span className="dot">⚓</span>
+              <span><b>{personalData.address}</b><span>CURRENT MOORING · OPEN TO RELOCATE</span></span>
+            </div>
+            <div className="contact-socials">
+              <a href={personalData.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z" /></svg>
+              </a>
+              <a href={personalData.linkedIn} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg viewBox="0 0 16 16"><path d="M0 1.15C0 .52.53 0 1.18 0h13.64C15.47 0 16 .52 16 1.15v13.7c0 .63-.53 1.15-1.18 1.15H1.18A1.17 1.17 0 0 1 0 14.85V1.15zm4.94 12.25V6.17H2.54v7.23h2.4zM3.74 5.18c.84 0 1.36-.55 1.36-1.24-.02-.71-.52-1.25-1.34-1.25-.82 0-1.36.54-1.36 1.25 0 .69.52 1.24 1.33 1.24h.01zm4.91 8.22V9.36c0-.22.02-.43.08-.59.17-.43.57-.88 1.23-.88.87 0 1.22.66 1.22 1.63v3.88h2.4V9.25c0-2.22-1.18-3.25-2.76-3.25-1.27 0-1.84.7-2.16 1.19v.02h-.02l.02-.02V6.17h-2.4c.03.68 0 7.23 0 7.23h2.4z" /></svg>
+              </a>
+              <a href={personalData.twitter} target="_blank" rel="noopener noreferrer" aria-label="X / Twitter">
+                <svg viewBox="0 0 16 16"><path d="M12.6.75h2.45L9.7 6.88 16 15.25h-4.93L7.2 10.2l-4.42 5.05H.32l5.73-6.56L0 .75h5.06l3.5 4.62L12.6.75zm-.86 13.03h1.36L4.32 2.15H2.86l8.88 11.63z" /></svg>
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center transition-all duration-1000 delay-300 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-      }`}>
         <ContactForm />
-        
-        <div className="lg:w-3/4">
-          <div className="flex flex-col gap-5 lg:gap-8">
-            {/* Email */}
-            <div className="group flex items-center gap-4 p-3 rounded-lg hover:bg-[#0a0e1a]/50 transition-all duration-300">
-              <div className="p-3 rounded-full bg-[#1e3a5f] group-hover:bg-[#00ff88] transition-all duration-300">
-                <MdAlternateEmail
-                  className="text-[#00ff88] group-hover:text-[#0a0e1a] transition-all duration-300"
-                  size={20}
-                />
-              </div>
-              <span className="text-gray-300 group-hover:text-[#00ff88] transition-colors duration-300">
-                {personalData.email}
-              </span>
-            </div>
-
-            {/* Phone */}
-            <div className="group flex items-center gap-4 p-3 rounded-lg hover:bg-[#0a0e1a]/50 transition-all duration-300">
-              <div className="p-3 rounded-full bg-[#1e3a5f] group-hover:bg-[#00d4ff] transition-all duration-300">
-                <IoMdCall
-                  className="text-[#00d4ff] group-hover:text-[#0a0e1a] transition-all duration-300"
-                  size={20}
-                />
-              </div>
-              <span className="text-gray-300 group-hover:text-[#00d4ff] transition-colors duration-300">
-                {personalData.phone}
-              </span>
-            </div>
-
-            {/* Location */}
-            <div className="group flex items-center gap-4 p-3 rounded-lg hover:bg-[#0a0e1a]/50 transition-all duration-300">
-              <div className="p-3 rounded-full bg-[#1e3a5f] group-hover:bg-[#8b5cf6] transition-all duration-300">
-                <CiLocationOn
-                  className="text-[#8b5cf6] group-hover:text-[#0a0e1a] transition-all duration-300"
-                  size={20}
-                />
-              </div>
-              <span className="text-gray-300 group-hover:text-[#8b5cf6] transition-colors duration-300">
-                {personalData.address}
-              </span>
-            </div>
-          </div>
-
-          {/* Social Links */}
-          <div className="mt-10">
-            <p className="text-sm text-gray-400 mb-4 font-mono">// Social Links</p>
-            <div className="flex items-center gap-4">
-              <Link 
-                target="_blank" 
-                href={personalData.github}
-                className="group p-4 rounded-full bg-[#1e3a5f]/50 border border-[#1e3a5f] hover:border-[#00ff88] hover:bg-[#00ff88]/10 transition-all duration-300"
-              >
-                <IoLogoGithub
-                  className="text-gray-400 group-hover:text-[#00ff88] transition-all duration-300"
-                  size={24}
-                />
-              </Link>
-              <Link 
-                target="_blank" 
-                href={personalData.linkedIn}
-                className="group p-4 rounded-full bg-[#1e3a5f]/50 border border-[#1e3a5f] hover:border-[#00d4ff] hover:bg-[#00d4ff]/10 transition-all duration-300"
-              >
-                <BiLogoLinkedin
-                  className="text-gray-400 group-hover:text-[#00d4ff] transition-all duration-300"
-                  size={24}
-                />
-              </Link>
-              <Link 
-                target="_blank" 
-                href={personalData.twitter}
-                className="group p-4 rounded-full bg-[#1e3a5f]/50 border border-[#1e3a5f] hover:border-[#8b5cf6] hover:bg-[#8b5cf6]/10 transition-all duration-300"
-              >
-                <FaXTwitter
-                  className="text-gray-400 group-hover:text-[#8b5cf6] transition-all duration-300"
-                  size={24}
-                />
-              </Link>
-            </div>
-          </div>
-        </div>
       </div>
-    </div>
+    </section>
   );
 }
 
