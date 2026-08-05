@@ -257,6 +257,12 @@ h1.hero-title .role{display:block;font-family:var(--font-body);font-weight:500;f
 }
 .island:hover .island-card{transform:translateY(-4px);box-shadow:0 20px 44px rgba(0,0,0,.55), inset 0 0 0 1px rgba(42,33,24,.12)}
 .island-card .ic-no{font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;color:var(--ink-soft);margin-bottom:8px;display:flex;justify-content:space-between}
+.island-card .ic-award{
+  display:inline-flex;align-items:center;gap:6px;margin-bottom:9px;
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;
+  color:#7a5312;background:rgba(217,164,65,.22);
+  border:1px solid rgba(217,164,65,.55);border-radius:999px;padding:4px 10px;
+}
 .island-card h3{font-family:var(--font-display);font-style:italic;font-weight:500;font-size:22px;line-height:1.25;margin-bottom:8px}
 .island-card .ic-desc{font-size:14.5px;color:#4d4234;line-height:1.6}
 .island-card .ic-stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
@@ -268,16 +274,26 @@ h1.hero-title .role{display:block;font-family:var(--font-body);font-weight:500;f
 .island-card .ic-more{
   max-height:0;overflow:hidden;transition:max-height .5s var(--ease-out),margin .5s;
 }
-.island.open .island-card .ic-more{max-height:400px;margin-top:14px}
+.island.open .island-card .ic-more{max-height:720px;margin-top:14px}
 .island-card .ic-more .tools{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
 .island-card .ic-more .tool{font-family:var(--font-mono);font-size:11px;border:1px dashed rgba(42,33,24,.35);border-radius:999px;padding:4px 10px;color:var(--ink-soft)}
 .island-card .ic-links{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px}
 .island-card .ic-links a{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:11.5px;color:#9c2f1e;text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
 .island-card .ic-links a:hover{border-color:#9c2f1e}
 .island-card .ic-links .private{font-family:var(--font-mono);font-size:11px;color:var(--ink-soft);font-style:italic}
-.island-card .ic-hint{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink-soft);margin-top:14px;display:flex;align-items:center;gap:8px}
+.island-card .ic-foot{margin-top:14px;padding-top:12px;border-top:1px dashed rgba(42,33,24,.18);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.island-card .ic-hint{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink-soft);display:flex;align-items:center;gap:8px}
 .island-card .ic-hint::before{content:"⚓";font-size:12px}
 .island.open .ic-hint .open-label,.island:not(.open) .ic-hint .close-label{display:none}
+.island-card .ic-repo{
+  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;color:#9c2f1e;text-decoration:none;
+  display:inline-flex;align-items:center;gap:6px;flex-shrink:0;
+  border:1px solid rgba(156,47,30,.35);border-radius:999px;padding:5px 11px;
+  transition:background-color .2s,border-color .2s;
+}
+.island-card .ic-repo svg{width:12px;height:12px;fill:currentColor}
+.island-card a.ic-repo:hover{background:rgba(156,47,30,.09);border-color:#9c2f1e}
+.island-card .ic-repo.private{color:var(--ink-soft);border-style:dashed;border-color:rgba(42,33,24,.28)}
 
 /* ---------- SKILLS — Cargo Manifest ---------- */
 #skills .manifest{
@@ -331,13 +347,64 @@ h1.hero-title .role{display:block;font-family:var(--font-body);font-weight:500;f
 .edu .school{color:var(--mist);font-size:14px;margin-bottom:12px}
 .edu p{color:var(--mist);font-size:15px}
 .edu p b{color:var(--foam);font-weight:500}
-.cert-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
-.cert{
-  display:inline-flex;align-items:center;gap:9px;
-  font-family:var(--font-mono);font-size:12px;color:var(--foam);
-  border:1px solid rgba(217,164,65,.4);border-radius:999px;padding:8px 15px;
+.h-label{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;color:var(--brass);
+  display:flex;align-items:center;gap:12px;margin-bottom:14px;
 }
-.cert::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--brass);transform:rotate(45deg)}
+.h-label::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(217,164,65,.45),transparent)}
+
+/* Honours — awards and competition wins */
+.honour{
+  border:1px solid rgba(217,164,65,.4);border-radius:12px;padding:24px 26px;
+  background:linear-gradient(180deg,rgba(217,164,65,.09),rgba(13,37,48,.6));
+  backdrop-filter:blur(4px);
+  transition:transform .3s var(--ease-out),border-color .3s;
+}
+.honour:hover{transform:translateY(-4px);border-color:rgba(217,164,65,.75)}
+.honour + .honour{margin-top:14px}
+.honour .h-ribbon{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;color:var(--brass);
+  border:1px solid rgba(217,164,65,.5);border-radius:999px;padding:4px 11px;margin-bottom:11px;
+}
+.honour h3{font-family:var(--font-display);font-style:italic;font-weight:500;font-size:23px;margin-bottom:8px}
+.honour h3 a{color:inherit;text-decoration:none;transition:color .2s}
+.honour h3 a:hover{color:var(--brass)}
+.honour p{color:var(--mist);font-size:15px;line-height:1.65}
+
+/* Certification badges */
+.cert-grid{display:flex;flex-wrap:wrap;gap:18px}
+.cert-badge{
+  flex:1 1 190px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:5px;
+  border:1px solid var(--line);border-radius:12px;padding:20px 18px;
+  background:rgba(13,37,48,.6);backdrop-filter:blur(4px);text-decoration:none;
+  transition:transform .3s var(--ease-out),border-color .3s;
+}
+.cert-badge:hover{transform:translateY(-4px);border-color:rgba(217,164,65,.55)}
+.cert-badge img{width:96px;height:96px;object-fit:contain;margin-bottom:6px}
+.cert-badge .cb-name{color:var(--foam);font-size:14px;line-height:1.35;font-weight:500}
+.cert-badge .cb-level{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;color:var(--brass)}
+
+/* ---------- 404 — Off the Charts ---------- */
+#not-found{min-height:78vh;display:flex;align-items:center;justify-content:center;text-align:center}
+.nf-wrap{max-width:620px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.nf-stamp{
+  display:inline-flex;align-items:center;gap:9px;margin-bottom:8px;
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:var(--mist);
+}
+.nf-compass{width:132px;height:132px;margin-bottom:10px}
+.nf-needle{transform-origin:60px 60px;animation:nf-spin 7s cubic-bezier(.4,0,.3,1) infinite}
+@keyframes nf-spin{
+  0%,100%{transform:rotate(-24deg)}
+  35%{transform:rotate(208deg)}
+  70%{transform:rotate(96deg)}
+}
+.nf-code{font-family:var(--font-mono);font-size:15px;letter-spacing:.4em;color:var(--brass)}
+.nf-title{font-family:var(--font-display);font-weight:500;font-size:clamp(38px,7vw,60px);line-height:1.1}
+.nf-title em{font-style:italic;color:var(--brass)}
+.nf-copy{color:var(--mist);font-size:16.5px;line-height:1.7;margin-top:12px}
+.nf-actions{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:26px}
+@media (prefers-reduced-motion:reduce){.nf-needle{animation:none}}
 
 /* ---------- CONTACT — Send a Signal ---------- */
 #contact{padding-bottom:60px}

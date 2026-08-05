@@ -2,6 +2,17 @@
 export const experiences = [
   {
     id: 1,
+    title: "Software Developer Intern",
+    company: "KeelWorks Foundation",
+    duration: "Jul 2026 — Present",
+    place: "Washington, USA · Remote",
+    points: [
+      "Building <b>production-style applications</b> for the foundation within a distributed team of developers, UI/UX designers, and QA engineers.",
+      "Contributing across the stack, with a focus on <b>full-stack development</b> in a remote-first workflow.",
+    ],
+  },
+  {
+    id: 2,
     title: "Data Science Projects",
     company: "Independent Research & Development",
     duration: "2024 — Present",
@@ -13,10 +24,10 @@ export const experiences = [
     ],
   },
   {
-    id: 2,
+    id: 3,
     title: 'Machine Learning Intern — Image Classification',
-    company: "Prodigy Infotech",
-    duration: "Aug — Sep 2023",
+    company: "Prodigy InfoTech",
+    duration: "Aug — Oct 2023",
     place: "Mumbai, India",
     points: [
       "Improved VisionNet classification accuracy by <b>15%</b> through hyperparameter tuning and deep feature selection.",
@@ -24,10 +35,10 @@ export const experiences = [
     ],
   },
   {
-    id: 3,
+    id: 4,
     title: "Machine Learning Intern — Model Optimization",
-    company: "TechnoHacks Edutech",
-    duration: "Jul — Aug 2023",
+    company: "TechnoHacks EduTech",
+    duration: "Jun — Jul 2023",
     place: "Nashik, India",
     points: [
       "Implemented automated preprocessing pipelines leveraging SMOTE and statistical outlier removal, reducing processing time by <b>30%</b>.",

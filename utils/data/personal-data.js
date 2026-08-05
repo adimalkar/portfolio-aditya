@@ -1,6 +1,6 @@
 export const personalData = {
   name: "ADITYA MALKAR",
-  profile: '/profile.png',
+  profile: '/profile.webp',
   designation: "Data Scientist & ML Engineer",
   // Short hero line shown under the name
   tagline: "Charting a course from raw data to working systems — deep learning models, AI agents, and pipelines that hold up in open water. M.S. Data Science, Stevens Institute of Technology. AWS certified, twice over.",
@@ -20,8 +20,29 @@ export const personalData = {
     { icon: '🐧', label: 'Linux native' },
   ],
   certifications: [
-    'AWS Certified ML Engineer — Associate',
-    'AWS Certified AI Practitioner',
+    {
+      name: 'AWS Certified Machine Learning Engineer',
+      level: 'Associate',
+      issuer: 'Amazon Web Services',
+      image: '/certs/aws-ml-engineer-associate.png',
+      url: 'https://www.credly.com/badges/2fa341b2-fd74-44e7-a3e6-779b30db9992/public_url',
+    },
+    {
+      name: 'AWS Certified AI Practitioner',
+      level: 'Foundational',
+      issuer: 'Amazon Web Services',
+      image: '/certs/aws-ai-practitioner.png',
+      url: 'https://www.credly.com/badges/4918c215-64ad-4064-9876-4b8a22908df0/public_url',
+    },
+  ],
+  achievements: [
+    {
+      title: 'FraudSight AI',
+      award: 'Hackathon Winner',
+      year: '2026',
+      description: 'Took first place with a Vision-Critic pipeline for insurance fraud detection — four models acting as an independent jury, with visual forensics deliberately isolated from logical deduction so neither could contaminate the other. Built in 48 hours and held up under the judges\' stress-testing.',
+      url: 'https://github.com/adimalkar/multimodal-fraud-detector',
+    },
   ],
   email: 'adityamalkar0@gmail.com',
   phone: '+1 (551) 362-6519',

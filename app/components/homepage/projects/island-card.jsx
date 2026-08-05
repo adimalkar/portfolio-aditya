@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // Small generative island: sand mass, shallows, palms, expedition flag.
 function IslandArt({ palms = 1, seed = 0 }) {
@@ -45,12 +45,37 @@ function IslandArt({ palms = 1, seed = 0 }) {
 
 function IslandCard({ project, index }) {
   const [open, setOpen] = useState(false);
+  // The global scroll-reveal observer adds `.in` imperatively; React must own it
+  // here too, or re-rendering on toggle strips it and the card fades to opacity 0.
+  const [revealed, setRevealed] = useState(false);
+  const ref = useRef(null);
   const no = `ISLE ${String(index + 1).padStart(2, "0")}`;
   const toggle = () => setOpen((v) => !v);
 
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (el.classList.contains("in")) {
+      setRevealed(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setRevealed(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <article
-      className={`island rv${open ? " open" : ""}`}
+      ref={ref}
+      className={`island rv${revealed ? " in" : ""}${open ? " open" : ""}`}
       tabIndex={0}
       role="button"
       aria-expanded={open}
@@ -65,6 +90,7 @@ function IslandCard({ project, index }) {
       <IslandArt palms={project.palm} seed={index} />
       <div className="island-card">
         <div className="ic-no"><span>{no}</span><span>{project.chartedYear}</span></div>
+        {project.award && <div className="ic-award">🏆 {project.award}</div>}
         <h3>{project.name}</h3>
         <p className="ic-desc">{project.summary}</p>
         <div className="ic-stats">
@@ -91,9 +117,28 @@ function IslandCard({ project, index }) {
             )}
           </div>
         </div>
-        <div className="ic-hint">
-          <span className="open-label">WEIGH ANCHOR — COLLAPSE</span>
-          <span className="close-label">DROP ANCHOR — FULL CHART</span>
+        <div className="ic-foot">
+          <span className="ic-hint">
+            <span className="open-label">WEIGH ANCHOR — COLLAPSE</span>
+            <span className="close-label">DROP ANCHOR — FULL CHART</span>
+          </span>
+          {project.code ? (
+            <a
+              className="ic-repo"
+              href={project.code}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              aria-label={`${project.name} source on GitHub`}
+            >
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+              </svg>
+              GITHUB
+            </a>
+          ) : (
+            <span className="ic-repo private">PRIVATE REPO</span>
+          )}
         </div>
       </div>
     </article>

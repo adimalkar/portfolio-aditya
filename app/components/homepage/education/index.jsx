@@ -1,6 +1,7 @@
 // @flow strict
 import { educations } from "@/utils/data/educations";
 import { personalData } from "@/utils/data/personal-data";
+import Image from "next/image";
 
 function Education() {
   return (
@@ -35,11 +36,48 @@ function Education() {
                 <p dangerouslySetInnerHTML={{ __html: edu.description }} />
               </article>
             ))}
-            {personalData.certifications?.length > 0 && (
-              <div className="cert-row rv">
-                {personalData.certifications.map((cert, i) => (
-                  <span className="cert" key={i}>{cert}</span>
+            {personalData.achievements?.length > 0 && (
+              <div className="honours rv">
+                <div className="h-label">HONOURS</div>
+                {personalData.achievements.map((item, i) => (
+                  <article className="honour" key={i}>
+                    <div className="h-ribbon">🏆 {item.award.toUpperCase()} · {item.year}</div>
+                    <h3>
+                      {item.url ? (
+                        <a href={item.url} target="_blank" rel="noopener noreferrer">
+                          {item.title} ↗
+                        </a>
+                      ) : item.title}
+                    </h3>
+                    <p>{item.description}</p>
+                  </article>
                 ))}
+              </div>
+            )}
+            {personalData.certifications?.length > 0 && (
+              <div className="certs rv">
+                <div className="h-label">CERTIFICATIONS</div>
+                <div className="cert-grid">
+                  {personalData.certifications.map((cert, i) => (
+                    <a
+                      className="cert-badge"
+                      key={i}
+                      href={cert.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={`Verify ${cert.name} on Credly`}
+                    >
+                      <Image
+                        src={cert.image}
+                        alt={`${cert.name} — ${cert.level}`}
+                        width={110}
+                        height={110}
+                      />
+                      <span className="cb-name">{cert.name}</span>
+                      <span className="cb-level">{cert.level} · Verify ↗</span>
+                    </a>
+                  ))}
+                </div>
               </div>
             )}
           </div>
