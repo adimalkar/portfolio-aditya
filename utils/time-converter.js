@@ -8,19 +8,21 @@ export function timeConverter(isoTime) {
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);
   const months = Math.floor(days / 30);
-  const years = Math.floor(months / 12);
+  const years = Math.floor(days / 365);
+
+  const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
 
   if (seconds < 60) {
-    return `${seconds} seconds ago`;
+    return rtf.format(-seconds, 'second');
   } else if (minutes < 60) {
-    return `${minutes} minutes ago`;
+    return rtf.format(-minutes, 'minute');
   } else if (hours < 24) {
-    return `${hours} hours ago`;
+    return rtf.format(-hours, 'hour');
   } else if (days < 30) {
-    return `${days} days ago`;
+    return rtf.format(-days, 'day');
   } else if (months < 12) {
-    return `${months} months ago`;
+    return rtf.format(-months, 'month');
   } else {
-    return `${years} years ago`;
+    return rtf.format(-years, 'year');
   }
 }
