@@ -1,48 +1,61 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
-const sections = [
-  ["Projects", "projects"], ["Open source", "open-source"], ["Experience", "experience"], ["About", "about"], ["Contact", "contact"]
+const NAV_ITEMS = [
+  { href: "#about", label: "ABOUT" },
+  { href: "#experience", label: "EXPERIENCE" },
+  { href: "#projects", label: "PROJECTS" },
+  { href: "#skills", label: "SKILLS" },
+  { href: "#education", label: "EDUCATION" },
+  { href: "#contact", label: "CONTACT" },
 ];
 
-export default function Navbar() {
-  const [open, setOpen] = useState(false);
-  const button = useRef(null);
-  const header = useRef(null);
+function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [activeId, setActiveId] = useState("");
 
   useEffect(() => {
-    if (!open) return;
-    function escape(event) {
-      if (event.key === "Escape") {
-        setOpen(false);
-        button.current.focus();
-      }
-    }
-    function outside(event) {
-      if (!header.current.contains(event.target)) setOpen(false);
-    }
-    document.addEventListener("keydown", escape);
-    document.addEventListener("pointerdown", outside);
-    return () => {
-      document.removeEventListener("keydown", escape);
-      document.removeEventListener("pointerdown", outside);
-    };
-  }, [open]);
+    const sections = document.querySelectorAll("section[id]");
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveId(entry.target.id);
+        });
+      },
+      { rootMargin: "-40% 0px -55% 0px" }
+    );
+
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <header className="header" ref={header}>
-      <div className="wrap nav-inner">
-        <a className="brand" href="/#hero" onClick={() => setOpen(false)}>
-          <span className="monogram" aria-hidden="true">am.</span> Aditya Malkar
-        </a>
-        <button className="menu-toggle" ref={button} type="button" aria-expanded={open} aria-controls="navigation" onClick={() => setOpen(!open)}>
-          {open ? "Close" : "Menu"}<span className={open ? "menu-lines opened" : "menu-lines"} aria-hidden="true" />
-        </button>
-        <nav id="navigation" aria-label="Main navigation" className={open ? "nav open" : "nav"}>
-          {sections.map(([label, id]) => <a key={id} href={"/#" + id} onClick={() => setOpen(false)}>{label}</a>)}
-        </nav>
-      </div>
+    <header className="voyage-header">
+      <a className="brand" href="#hero"><b>ADITYA</b>&nbsp;MALKAR</a>
+      <button
+        className="nav-toggle"
+        aria-label="Open menu"
+        onClick={() => setMenuOpen((v) => !v)}
+      >
+        MENU
+      </button>
+      <nav className={`main${menuOpen ? " openv" : ""}`}>
+        {NAV_ITEMS.map((item) => (
+          <a
+            key={item.href}
+            href={item.href}
+            className={activeId === item.href.slice(1) ? "active" : undefined}
+            onClick={() => setMenuOpen(false)}
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
     </header>
   );
 }
+
+export default Navbar;
