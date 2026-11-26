@@ -1,15 +1,10 @@
-// @flow strict
-function Footer() {
-  const currentYear = new Date().getFullYear();
+import { personalData } from "@/utils/data/personal-data";
 
+export default function Footer() {
   return (
-    <footer className="voyage-footer">
-      <div>© {currentYear} ADITYA MALKAR · ALL CHARTS ORIGINAL</div>
-      <div className="fline">
-        DRAWN WITH NEXT.JS &amp; A STEADY HAND · <a href="#hero">RETURN TO PORT ↑</a>
-      </div>
-    </footer>
+    <footer><div className="wrap footer-inner">
+      <span>© {new Date().getFullYear()} Aditya Malkar</span>
+      <div><a href={personalData.github}>GitHub</a><a href={personalData.linkedIn}>LinkedIn</a><a href="/#hero">Back to top</a></div>
+    </div></footer>
   );
 }
-
-export default Footer;
